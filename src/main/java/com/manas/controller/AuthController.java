@@ -20,7 +20,7 @@ public class AuthController {
         return authService.register(registerRequest);
     }
 
-    @PostMapping("/authenticate")
+    @PostMapping("/login")
     public AuthResponse authenticate(@RequestBody AuthRequest authRequest){
         return authService.authenticate(authRequest);
     }

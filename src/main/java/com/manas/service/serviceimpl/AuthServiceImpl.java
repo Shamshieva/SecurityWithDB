@@ -5,8 +5,10 @@ import com.manas.dto.request.RegisterRequest;
 import com.manas.dto.response.AuthResponse;
 import com.manas.entity.AuthInfo;
 import com.manas.config.jwt.JwtUtil;
+import com.manas.enums.Role;
 import com.manas.repository.AuthInfoRepository;
 import com.manas.service.AuthService;
+import jakarta.annotation.PostConstruct;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -64,5 +66,17 @@ public class AuthServiceImpl implements AuthService {
                 .token(token)
                 .email(authInfo.getEmail())
                 .build();
+    }
+
+    @PostConstruct
+    public void init(){
+        AuthInfo authInfo = new AuthInfo();
+        authInfo.setRole(Role.ADMIN);
+        authInfo.setEmail("burulai@gmail.com");
+        authInfo.setPassword("burulai");
+
+        if (!authInfoRepository.existsByEmail(authInfo.getEmail())){
+            authInfoRepository.save(authInfo);
+        }
     }
 }

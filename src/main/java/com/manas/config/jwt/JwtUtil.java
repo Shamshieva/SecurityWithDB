@@ -30,6 +30,7 @@ public class JwtUtil {
         JWTVerifier verifier = JWT
                 .require(Algorithm.HMAC256(SECRET_KEY))
                 .build();
+
         DecodedJWT jwt = verifier.verify(token);
         return jwt.getClaim("username").asString();
     }
